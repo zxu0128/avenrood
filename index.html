@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>avenrood photography</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;400&display=swap" rel="stylesheet">
+
+  <style>
+    :root { --header-h: 60px; --side-pad: 1rem; --gallery-pad: 40px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Raleway', Arial, Helvetica, sans-serif;
+      font-weight: 200;
+      color: #111;
+      background: #f3f3f3;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Header */
+    header {
+      position: fixed; top: 0; left: 0; width: 100%; height: var(--header-h);
+      display: grid; grid-template-columns: auto 1fr; align-items: center;
+      padding: 0 var(--side-pad);
+      background: rgba(243,243,243,0.9);
+      backdrop-filter: blur(5px);
+      border-bottom: 1px solid rgba(200,200,200,0.5);
+      z-index: 1000;
+    }
+    .logo { font-weight: 400; font-size: 1.15rem; text-transform: lowercase; letter-spacing: 0; }
+    .logo a { text-decoration: none; color: inherit; }
+    nav { justify-self: end; display: flex; gap: 1rem; align-items: center; overflow-x: auto; }
+    nav a { text-decoration: none; color: #111; font-weight: 200; padding: 6px 8px; white-space: nowrap; transition: opacity 0.2s; }
+    nav a.active { opacity: 0.65; }
+
+    /* Gallery container */
+    .gallery-container {
+      position: absolute; top: var(--header-h); left: 0; right: 0; bottom: 0;
+      height: calc(100vh - var(--header-h));
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: auto; /* controlled by JS */
+      background: #f3f3f3;
+    }
+
+    /* inner track (inline-flex) — Safari-friendly width calculation */
+    .gallery-track {
+      display: inline-flex;
+      height: 100%;
+      align-items: center;
+      padding: 0 28px; /* edge padding so first/last visible */
+    }
+    .gallery-track::after { content: ''; flex: 0 0 28px; } /* extra spacer to guarantee reachability */
+
+    .photo {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      margin: 0 10px;
+    }
+    .photo img {
+      max-height: calc(100% - var(--gallery-pad)*2);
+      width: auto;
+      object-fit: contain;
+      border-radius: 0;
+      display: block;
+    }
+
+    p { font-size: 0.9em; } /* slightly smaller paragraphs */
+
+    @media (max-width: 700px) {
+      header { padding: 0 0.6rem; }
+      .logo { font-size: 1rem; }
+      nav { gap: 0.6rem; }
+      nav a { font-size: 0.95rem; padding: 5px 6px; }
+      .gallery-track { padding: 0 18px; }
+      .gallery-track::after { flex: 0 0 18px; }
+      .photo { margin: 0 8px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo"><a href="index.html">avenrood</a></div>
+    <nav>
+      <a href="info.html">info</a>
+      <a href="collections.html">collections</a>
+      <a href="prints.html">prints</a>
+      <a href="https://instagram.com/avenrood" target="_blank" rel="noopener noreferrer">instagram</a>
+    </nav>
+  </header>
+
+  <div class="gallery-container" id="gallery">
+    <div class="gallery-track" id="galleryTrack">
+      <div class="photo"><img src="images/radiantcut.jpg" alt="radiant cut"></div>
+      <div class="photo"><img src="images/blindfolded.jpg" alt="blind folded"></div>
+      <div class="photo"><img src="images/ontheline.jpeg" alt="hanging on the line"></div>
+      <div class="photo"><img src="images/abstractloneliness.jpeg" alt="abstract loneliness"></div>
+      <div class="photo"><img src="https://picsum.photos/id/1012/900/1200" alt="Portrait 3"></div>
+      <div class="photo"><img src="https://picsum.photos/id/1035/1600/1000" alt="Landscape 3"></div>
+      <div class="photo"><img src="https://picsum.photos/id/1045/1600/1000" alt="Landscape 4"></div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const gallery = document.getElementById('gallery');
+
+      // rAF batching to avoid jumpy behavior in Safari/Chrome
+      let pendingDelta = 0;
+      let ticking = false;
+
+      gallery.addEventListener('wheel', function(e) {
+        // only handle vertical wheel to convert to horizontal
+        if (Math.abs(e.deltaY) < Math.abs(e.deltaX)) return; // let native horizontal swipes pass
+        e.preventDefault();
+        pendingDelta += e.deltaY;
+
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(() => {
+            // clamp scroll to valid range
+            const maxScroll = gallery.scrollWidth - gallery.clientWidth;
+            let next = gallery.scrollLeft + pendingDelta;
+            if (next < 0) next = 0;
+            if (next > maxScroll) next = maxScroll;
+            gallery.scrollLeft = next;
+
+            pendingDelta = 0;
+            ticking = false;
+          });
+        }
+      }, { passive: false });
+
+      // Optional: keyboard arrows (left/right) for accessibility
+      gallery.tabIndex = -1; // allow focus programmatically if needed
+
+    })();
+  </script>
+</body>
+</html>
