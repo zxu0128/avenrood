@@ -113,11 +113,11 @@
       .menu-toggle.open span:nth-child(2) { opacity: 0; }
       .menu-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
       
-      /* Restored Top Alignment + Upper-Center Positioning */
+      /* Updated Mobile Uniform Height Alignment */
       .gallery-track { 
-        padding: 12vh 1rem 0 1rem; /* 12vh pushes the whole block down to the upper-middle of the screen */
+        padding: 0 1rem; 
         gap: 16px; 
-        align-items: flex-start; /* Restores the crisp top alignment between text and images */
+        align-items: center; 
         transform: none; 
       }
       .gallery-track::after { flex: 0 0 1rem; }
@@ -125,17 +125,20 @@
       .text-box {
         max-width: 260px;
         margin-right: 20px;
-        margin-top: 0;
+        height: 55vh;         /* Matches image height */
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start; /* Pins text to top */
       }
 
       .photo { 
-        height: 60vh; /* Original size */
+        height: 55vh;         /* Matches text box height */
         width: max-content;
         display: flex; 
-        align-items: flex-start; /* Keeps the images pinned to their top edge */
+        align-items: center;  /* Centers images in the 55vh block */
       }
       .photo img { 
-        max-height: 100%; 
+        height: 100%; 
         width: auto;
         object-fit: contain;
       }
