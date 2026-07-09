@@ -113,11 +113,11 @@
       .menu-toggle.open span:nth-child(2) { opacity: 0; }
       .menu-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
       
-      /* Fixed Top Alignment */
+      /* Restored Top Alignment + Upper-Center Positioning */
       .gallery-track { 
-        padding: 20px 1rem; 
+        padding: 12vh 1rem 0 1rem; /* 12vh pushes the whole block down to the upper-middle of the screen */
         gap: 16px; 
-        align-items: flex-start; /* Forces content to the TOP */
+        align-items: flex-start; /* Restores the crisp top alignment between text and images */
         transform: none; 
       }
       .gallery-track::after { flex: 0 0 1rem; }
@@ -129,10 +129,10 @@
       }
 
       .photo { 
-        height: 60vh; /* Adjust height as needed */
+        height: 60vh; /* Original size */
         width: max-content;
         display: flex; 
-        align-items: flex-start; /* Pins images to the top */
+        align-items: flex-start; /* Keeps the images pinned to their top edge */
       }
       .photo img { 
         max-height: 100%; 
