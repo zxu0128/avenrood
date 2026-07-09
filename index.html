@@ -14,7 +14,7 @@
       font-family: 'Raleway', Arial, Helvetica, sans-serif;
       font-weight: 200;
       color: #111;
-      background: #fafafa; /* ✅ Adjusted to a brighter, clean off-white */
+      background: #fafafa; /* Adjusted to a brighter, clean off-white */
       height: 100vh;
       overflow: hidden;
     }
@@ -24,16 +24,36 @@
       position: fixed; top: 0; left: 0; width: 100%; height: var(--header-h);
       display: grid; grid-template-columns: auto 1fr; align-items: center;
       padding: 0 var(--side-pad);
-      background: rgba(250,250,250,0.9); /* ✅ Matches the new off-white background */
+      background: rgba(250,250,250,0.9); /* Matches the new off-white background */
       backdrop-filter: blur(5px);
       border-bottom: 1px solid rgba(200,200,200,0.4);
       z-index: 1000;
     }
-    .logo { font-weight: 400; font-size: 1.15rem; text-transform: lowercase; letter-spacing: 0; }
+    .logo { font-weight: 400; font-size: 1.15rem; text-transform: lowercase; letter-spacing: 0; z-index: 1001; }
     .logo a { text-decoration: none; color: inherit; }
-    nav { justify-self: end; display: flex; gap: 1rem; align-items: center; overflow-x: auto; }
+    nav { justify-self: end; display: flex; gap: 1rem; align-items: center; }
     nav a { text-decoration: none; color: #111; font-weight: 200; padding: 6px 8px; white-space: nowrap; transition: opacity 0.2s; }
     nav a.active { opacity: 0.65; }
+
+    /* Hamburger Menu Button (Desktop Hidden) */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 6px;
+      justify-self: end;
+      z-index: 1001;
+      padding: 8px;
+    }
+    .menu-toggle span {
+      display: block;
+      width: 20px;
+      height: 1px;
+      background-color: #111;
+      transition: transform 0.3s, opacity 0.3s;
+    }
 
     /* Gallery container */
     .gallery-container {
@@ -43,7 +63,7 @@
       overflow-y: hidden;
       -webkit-overflow-scrolling: touch;
       scroll-behavior: auto; /* controlled by JS */
-      background: #fafafa; /* ✅ Matches the body background */
+      background: #fafafa; /* Matches the body background */
     }
 
     /* inner track (inline-flex) — Safari-friendly width calculation */
@@ -52,6 +72,7 @@
       height: 100%;
       align-items: center;
       padding: 0 28px; /* edge padding so first/last visible */
+      gap: 20px;
     }
     .gallery-track::after { content: ''; flex: 0 0 28px; } /* extra spacer to guarantee reachability */
 
@@ -61,7 +82,8 @@
       align-items: center;
       justify-content: center;
       height: 100%;
-      margin: 0 10px;
+      width: -webkit-max-content;
+      width: max-content;
     }
     .photo img {
       max-height: calc(100% - var(--gallery-pad)*2);
@@ -75,17 +97,57 @@
 
     /* Mobile adjustments */
     @media (max-width: 700px) {
-      header { padding: 0 0.6rem; }
+      header { padding: 0 1rem; }
       .logo { font-size: 1rem; }
-      nav { gap: 0.6rem; }
-      nav a { font-size: 0.95rem; padding: 5px 6px; }
-      .gallery-track { padding: 0 10px; }
-      .gallery-track::after { flex: 0 0 10px; }
+      
+      /* Display structural toggle */
+      .menu-toggle { display: flex; }
+
+      /* Convert regular nav to fine overlay grid */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: #fafafa;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1.8rem;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.25s, visibility 0.25s;
+        z-index: 1000;
+      }
+
+      nav.open {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      nav a {
+        font-size: 1.2rem;
+        padding: 8px;
+      }
+
+      /* CSS Transforms for Toggle Cross Action */
+      .menu-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+      .menu-toggle.open span:nth-child(2) { opacity: 0; }
+      .menu-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+      /* Visual centering: shifts track higher away from navigation/safe areas */
+      .gallery-track { 
+        padding: 0 16px; 
+        gap: 16px;
+        transform: translateY(-3.5vh); 
+      }
+      .gallery-track::after { flex: 0 0 16px; }
 
       .photo {
-        margin: 0 6px;   
         height: 100%;
-        width: auto; 
+        width: -webkit-max-content;
+        width: max-content;
       }
 
       .photo img {
@@ -100,7 +162,15 @@
 <body>
   <header>
     <div class="logo"><a href="index.html">avenrood</a></div>
-    <nav>
+    
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav id="navMenu">
+      <a href="index.html">home</a>
       <a href="info.html">info</a>
       <a href="travel.html">travel</a>
       <a href="people.html">people</a>
@@ -163,6 +233,7 @@
       let pendingDelta = 0;
       let ticking = false;
 
+      // Wheel transform scroll architecture
       gallery.addEventListener('wheel', function(e) {
         if (Math.abs(e.deltaY) < Math.abs(e.deltaX)) return;
         e.preventDefault();
@@ -181,6 +252,15 @@
           });
         }
       }, { passive: false });
+
+      // Mobile Overlay Handler
+      const menuToggle = document.getElementById('menuToggle');
+      const navMenu = document.getElementById('navMenu');
+
+      menuToggle.addEventListener('click', function() {
+        this.classList.toggle('open');
+        navMenu.classList.toggle('open');
+      });
     })();
   </script>
 </body>
