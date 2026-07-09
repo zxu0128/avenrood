@@ -159,6 +159,7 @@
       .menu-toggle.open span:nth-child(2) { opacity: 0; }
       .menu-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
+      /* Mobile ordering adjustments */
       .info-container {
         grid-template-columns: 1fr;
         text-align: left;
@@ -168,14 +169,25 @@
       }
 
       .info-text {
-        order: 2;
         max-width: 100%;
         padding-left: 0;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .info-intro {
+        order: 1;
+        margin-bottom: 1.5rem;
       }
 
       .info-image {
-        order: 1;
+        order: 2;
         justify-self: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .info-details {
+        order: 3;
       }
 
       .info-image img {
@@ -207,12 +219,19 @@
   <main>
     <div class="info-container">
       <div class="info-text">
-        <p>Zihan Avenrood Xu is a photographer and visual artist based in Canada, photography work captures coincidence, decay, subtext, and absurdity within urban and natural landscapes across North America and Central Asia.</p><br>
-        <p>avenrood's work can be seen on <em>Apple, Kinfolk Magazine, Fisheye Magazine, Rental Magazine</em> and more.</p><br>
+        <!-- Placed above image on mobile -->
+        <div class="info-intro">
+          <p>Zihan Avenrood Xu is a photographer and visual artist based in Canada, photography work captures coincidence, decay, subtext, and absurdity within urban and natural landscapes across North America and Central Asia.</p><br>
+          <p>Work can be seen on <em>Apple, Kinfolk Magazine, Fisheye Magazine, Rental Magazine</em> and more.</p><br>
+        </div>
 
-        <p>More on <em><a href="https://www.instagram.com/avenrood/">instagram</a></em></p>
-        <p>Email: <a href="mailto:avenrood@gmail.com">avenrood</a></p>
+        <!-- Placed below image on mobile -->
+        <div class="info-details">
+          <p>More on <em><a href="https://www.instagram.com/avenrood/">instagram</a></em></p>
+          <p>Email: <a href="mailto:avenrood@gmail.com">avenrood</a></p>
+        </div>
       </div>
+      
       <div class="info-image">
         <img src="images/avenrood.jpg" alt="avenrood">
       </div>
