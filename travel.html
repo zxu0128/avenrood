@@ -115,7 +115,7 @@
       
       /* Restored Top Alignment + Upper-Center Positioning */
       .gallery-track { 
-        padding:18vh 1rem 0 1rem; /* Reduced from 12vh to 6vh */
+        padding: 12vh 1rem 0 1rem; /* 12vh pushes the whole block down to the upper-middle of the screen */
         gap: 16px; 
         align-items: flex-start; /* Restores the crisp top alignment between text and images */
         transform: none; 
@@ -170,4 +170,48 @@
       <div class="photo"><img src="images/aftersnow.jpg" alt="avenrood travel"></div>
       <div class="photo"><img src="images/yakintibet.jpg" alt="avenrood travel"></div>
       <div class="photo"><img src="images/flamemountains_avenrood.jpg" alt="flamemountains_avenrood"></div>
-      <div class="photo"><img src="images/
+      <div class="photo"><img src="images/ontheroad.jpg" alt="ontheroad"></div>
+      <div class="photo"><img src="images/travelseries.jpg" alt="travel"></div>
+      <div class="photo"><img src="images/home.jpg" alt="home"></div>
+      <div class="photo"><img src="images/llama.jpg" alt="home"></div>
+      <div class="photo"><img src="images/dune.jpg" alt="dune"></div>
+      <div class="photo"><img src="images/sand.jpeg" alt="dune"></div>
+      <div class="photo"><img src="images/lakeside.jpg" alt="lakeside"></div>  
+      <div class="photo"><img src="images/palace.jpg" alt="palace"></div> 
+      <div class="photo"><img src="images/highway.jpg" alt="highway"></div>    
+      <div class="photo"><img src="images/danxialandscape_avenrood.jpg" alt="danxialandscape_avenrood"></div>
+      <div class="photo"><img src="images/sweep.jpg" alt="avenrood"></div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const gallery = document.getElementById('gallery');
+      let pending = 0, ticking = false;
+      gallery.addEventListener('wheel', function(e){
+        if (Math.abs(e.deltaY) < Math.abs(e.deltaX)) return;
+        e.preventDefault();
+        pending += e.deltaY;
+        if (!ticking){
+          ticking = true;
+          requestAnimationFrame(() => {
+            const max = gallery.scrollWidth - gallery.clientWidth;
+            let next = gallery.scrollLeft + pending;
+            if (next < 0) next = 0;
+            if (next > max) next = max;
+            gallery.scrollLeft = next;
+            pending = 0; ticking = false;
+          });
+        }
+      }, { passive: false });
+
+      const menuToggle = document.getElementById('menuToggle');
+      const navMenu = document.getElementById('navMenu');
+      menuToggle.addEventListener('click', function() {
+        this.classList.toggle('open');
+        navMenu.classList.toggle('open');
+      });
+    })();
+  </script>
+</body>
+</html>
