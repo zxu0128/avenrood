@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>people | avenrood</title>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght=200;400&display=swap" rel="stylesheet">
+  <style>
+    :root { --header-h: 60px; --side-pad: 1rem; --gallery-pad: 40px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { 
+      font-family: 'Raleway', Arial, Helvetica, sans-serif; 
+      font-weight: 200; 
+      color: #111; 
+      background: #fafafa; /* Updated to match off-white background */
+      height: 100vh; 
+      overflow: hidden; 
+    }
+    p { font-size: 0.9em; }
+    
+    /* Header */
+    header {
+      position: fixed; top: 0; left: 0; width: 100%; height: var(--header-h);
+      display: grid; grid-template-columns: auto 1fr; align-items: center;
+      padding: 0 var(--side-pad);
+      background: rgba(250,250,250,0.9); /* Matches off-white background */
+      backdrop-filter: blur(5px);
+      border-bottom: 1px solid rgba(200,200,200,0.4); z-index: 1000;
+    }
+    .logo { font-weight: 400; font-size: 1.15rem; text-transform: lowercase; }
+    .logo a { text-decoration: none; color: inherit; }
+    nav { justify-self: end; display: flex; gap: 1rem; align-items: center; overflow-x: auto; }
+    nav a { text-decoration: none; color: #111; font-weight: 200; padding: 6px 8px; white-space: nowrap; transition: opacity 0.2s; }
+    nav a.active { opacity: 0.65; }
+
+    /* Gallery Layout */
+    .gallery-container {
+      position: absolute; top: var(--header-h); left: 0; right: 0; bottom: 0;
+      height: calc(100vh - var(--header-h));
+      overflow-x: auto; overflow-y: hidden;
+      -webkit-overflow-scrolling: touch; scroll-behavior: auto;
+      background: #fafafa; /* Matches off-white background */
+    }
+    
+    .gallery-track { 
+      display: inline-flex; 
+      height: 100%; 
+      align-items: center; 
+      padding: 0 28px; 
+      gap: 20px; /* ✅ FIX 1: Replaces collapsing margins with solid horizontal gap */
+    }
+    .gallery-track::after { content:''; flex:0 0 28px; }
+    
+    .photo { 
+      flex: 0 0 auto; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      height: 100%; 
+      width: -webkit-max-content;
+      width: max-content; /* ✅ FIX 2: Dynamic bounding fix for Safari fullscreen display */
+    }
+    .photo img { max-height: calc(100% - var(--gallery-pad)*2); width:auto; object-fit:contain; display: block; }
+    
+    /* Text Intro Block */
+    .text-box { 
+      flex: 0 0 auto; 
+      max-width: 320px; /* Made narrower for a cleaner look */
+      margin: 0 10px 0 0; /* Remapped margins to match track layout standards */
+      padding: 0; 
+      background: transparent; 
+      border: none; 
+      text-align: left; 
+    }
+    .text-box h2 { font-weight: 400; font-size: 1.5rem; margin-bottom: 1rem; }
+
+    /* Mobile adjustments */
+    @media (max-width: 700px) {
+      header { padding: 0 0.6rem; }
+      .logo { font-size: 1rem; }
+      nav { gap: 0.6rem; }
+      nav a { font-size: 0.95rem; padding: 5px 6px; }
+      
+      .gallery-track { 
+        padding: 0 10px; 
+        gap: 12px; /* Smoothed layout spacing configuration for mobile */
+      }
+      .gallery-track::after { flex: 0 0 10px; }
+
+      .photo { 
+        height: 100%; 
+        width: -webkit-max-content;
+        width: max-content;
+      }
+      .photo img { 
+        height: 55vh; /* Matches home page mobile scaling */
+        max-height: 55vh; 
+        width: auto;
+        object-fit: contain;
+      }
+      .text-box {
+        max-width: 260px;
+        margin-right: 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo"><a href="index.html">avenrood</a></div>
+    <nav>
+      <a href="index.html">home</a>
+      <a href="info.html">info</a>
+      <a href="travel.html" class="active">travel</a>
+      <a href="people.html">people</a>
+      <a href="shadows.html">shadows</a>
+      <a href="https://instagram.com/avenrood" target="_blank" rel="noopener noreferrer">instagram</a>
+    </nav>
+  </header>
+
+  <div class="gallery-container" id="gallery">
+    <div class="gallery-track" id="galleryTrack">
+      <div class="text-box">
+        <h2>people</h2>
+        <p>memorable moments<br>streets, events, sets</p>
+      </div>
+      
+      <div class="photo"><img src="images/MM.jpg" alt="avenrood portrait"></div>
+      <div class="photo"><img src="images/M.jpg" alt="avenrood portrait"></div>
+      <div class="photo"><img src="images/engage.jpg" alt="avenrood portrait"></div>
+      <div class="photo"><img src="images/orange.jpg" alt="avenrood portrait"></div>
+      <div class="photo"><img src="images/Mmm.jpg" alt="avenrood"></div>
+      <div class="photo"><img src="images/fall.jpg" alt="avenrood portrait"></div>
+      <div class="photo"><img src="images/engage3.jpg" alt="avenrood portrait"></div>
+      <div class="photo"><img src="images/wait.jpg" alt="travel"></div>
+      <div class="photo"><img src="images/engage5.jpg" alt="avenrood portrait"></div>
+      <div class="photo"><img src="images/delivered.jpg" alt="travel"></div>
+      <div class="photo"><img src="images/whoyouare.jpg" alt="avenrood"></div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const gallery = document.getElementById('gallery');
+      let pending = 0, ticking = false;
+      gallery.addEventListener('wheel', function(e){
+        if (Math.abs(e.deltaY) < Math.abs(e.deltaX)) return;
+        e.preventDefault();
+        pending += e.deltaY;
+        if (!ticking){
+          ticking = true;
+          requestAnimationFrame(() => {
+            const max = gallery.scrollWidth - gallery.clientWidth;
+            let next = gallery.scrollLeft + pending;
+            if (next < 0) next = 0;
+            if (next > max) next = max;
+            gallery.scrollLeft = next;
+            pending = 0; ticking = false;
+          });
+        }
+      }, { passive: false });
+    })();
+  </script>
+</body>
+</html>
