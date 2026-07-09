@@ -34,7 +34,7 @@
     nav a { text-decoration: none; color: #111; font-weight: 200; padding: 6px 8px; white-space: nowrap; transition: opacity 0.2s; }
     nav a.active { opacity: 0.65; }
 
-    /* Hamburger Menu Button */
+    /* Hamburger Menu */
     .menu-toggle {
       display: none;
       background: none;
@@ -97,7 +97,6 @@
     @media (max-width: 700px) {
       header { padding: 0 1rem; }
       .logo { font-size: 1rem; }
-      
       .menu-toggle { display: flex; }
 
       nav {
@@ -105,7 +104,7 @@
         background: #fafafa; flex-direction: column; justify-content: center;
         align-items: flex-start; padding-left: 3rem; gap: 1.1rem;
         opacity: 0; visibility: hidden; transition: opacity 0.25s, visibility 0.25s;
-        z-index: 1000; overflow-x: hidden;
+        z-index: 1000;
       }
       nav.open { opacity: 1; visibility: visible; }
       nav a { font-size: 1.05rem; padding: 4px 0; }
@@ -114,7 +113,7 @@
       .menu-toggle.open span:nth-child(2) { opacity: 0; }
       .menu-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
       
-      /* Mobile Alignment: Text Top, Images Center */
+      /* Updated Mobile Uniform Height Alignment */
       .gallery-track { 
         padding: 0 1rem; 
         gap: 16px; 
@@ -126,19 +125,20 @@
       .text-box {
         max-width: 260px;
         margin-right: 20px;
-        align-self: flex-start; 
-        margin-top: 50px; 
+        height: 55vh;         /* Matched height */
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start; /* Pins text to top of box */
       }
 
       .photo { 
-        height: 100%; 
+        height: 55vh;         /* Matched height */
         width: max-content;
         display: flex; 
-        align-items: center;
+        align-items: center;  /* Centers image in the 55vh space */
       }
       .photo img { 
-        height: 55vh; 
-        max-height: 55vh; 
+        height: 100%; 
         width: auto;
         object-fit: contain;
       }
@@ -164,9 +164,10 @@
   <div class="gallery-container" id="gallery">
     <div class="gallery-track" id="galleryTrack">
       <div class="text-box">
-        <h2>shadows</h2>
-        <p>the silent geometry <br> of light and space.</p>
+        <h2>Shadows</h2>
+        <p>Silent geometry <br> of light and space.</p>
       </div>
+      
       <div class="photo"><img src="images/radiantcut.jpg" alt="shadows"></div>
       <div class="photo"><img src="images/synchronicity.webp" alt="shadows"></div>
       <div class="photo"><img src="images/thinkahead.png" alt="shadows"></div>
