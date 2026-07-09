@@ -66,8 +66,7 @@
     .gallery-track { 
       display: inline-flex; 
       height: 100%; 
-      align-items: flex-start; 
-      /* Changed left tracking padding to match the global side padding system value */
+      align-items: flex-start; /* Forces a strict upper alignment boundary line */
       padding: var(--gallery-pad) var(--side-pad) 0 var(--side-pad); 
       gap: 20px; 
     }
@@ -88,7 +87,6 @@
     .text-box { 
       flex: 0 0 auto; 
       max-width: 320px; 
-      /* Added a right margin gaps buffer to cleanly separate text bounds from first image layout track */
       margin: 0 38px 0 0; 
       padding: 0; 
       background: transparent; 
@@ -104,7 +102,7 @@
       
       .menu-toggle { display: flex; }
 
-      /* Left-aligned, tight overlay layout matching index */
+      /* Left-aligned mobile nav system overlay screen layout */
       nav {
         position: fixed;
         top: 0;
@@ -140,7 +138,6 @@
       .menu-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
       
       .gallery-track { 
-        /* Enforces standard 1rem system padding consistency down into mobile screens */
         padding: var(--gallery-pad) 1rem 0 1rem; 
         gap: 16px; 
         transform: none; 
