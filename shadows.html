@@ -34,7 +34,7 @@
     nav a { text-decoration: none; color: #111; font-weight: 200; padding: 6px 8px; white-space: nowrap; transition: opacity 0.2s; }
     nav a.active { opacity: 0.65; }
 
-    /* Hamburger Menu Button (Desktop Hidden) */
+    /* Hamburger Menu Button */
     .menu-toggle {
       display: none;
       background: none;
@@ -78,12 +78,10 @@
       align-items: flex-start; 
       justify-content: center; 
       height: calc(100% - var(--gallery-pad) * 2); 
-      width: -webkit-max-content;
       width: max-content; 
     }
     .photo img { max-height: 100%; width:auto; object-fit:contain; display: block; }
     
-    /* Text Intro Block */
     .text-box { 
       flex: 0 0 auto; 
       max-width: 320px; 
@@ -103,24 +101,12 @@
       .menu-toggle { display: flex; }
 
       nav {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: #fafafa;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        padding-left: 3rem;
-        gap: 1.1rem;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.25s, visibility 0.25s;
-        z-index: 1000;
-        overflow-x: hidden;
+        position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+        background: #fafafa; flex-direction: column; justify-content: center;
+        align-items: flex-start; padding-left: 3rem; gap: 1.1rem;
+        opacity: 0; visibility: hidden; transition: opacity 0.25s, visibility 0.25s;
+        z-index: 1000; overflow-x: hidden;
       }
-
       nav.open { opacity: 1; visibility: visible; }
       nav a { font-size: 1.05rem; padding: 4px 0; }
 
@@ -128,18 +114,26 @@
       .menu-toggle.open span:nth-child(2) { opacity: 0; }
       .menu-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
       
+      /* Mobile Alignment: Text Top, Images Center */
       .gallery-track { 
         padding: 0 1rem; 
         gap: 16px; 
-        align-items: center; /* This aligns everything to the vertical center */
+        align-items: center; 
         transform: none; 
       }
       .gallery-track::after { flex: 0 0 1rem; }
 
+      .text-box {
+        max-width: 260px;
+        margin-right: 20px;
+        align-self: flex-start; 
+        margin-top: 50px; 
+      }
+
       .photo { 
         height: 100%; 
         width: max-content;
-        display: flex; /* Ensures content inside is handled as a block */
+        display: flex; 
         align-items: center;
       }
       .photo img { 
@@ -148,24 +142,15 @@
         width: auto;
         object-fit: contain;
       }
-      .text-box {
-        max-width: 260px;
-        margin-right: 20px;
-        margin-top: 0; 
-      }
     }
   </style>
 </head>
 <body>
   <header>
     <div class="logo"><a href="index.html">avenrood</a></div>
-    
     <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
-      <span></span>
-      <span></span>
-      <span></span>
+      <span></span><span></span><span></span>
     </button>
-
     <nav id="navMenu">
       <a href="index.html">home</a>
       <a href="info.html">info</a>
@@ -179,36 +164,35 @@
   <div class="gallery-container" id="gallery">
     <div class="gallery-track" id="galleryTrack">
       <div class="text-box">
-        <h2>Shadows</h2>
-        <p>Silent geometry <br> of light and space.</p>
+        <h2>shadows</h2>
+        <p>the silent geometry <br> of light and space.</p>
       </div>
-      
-      <div class="photo"><img src="images/radiantcut.jpg" alt="avenrood shadows"></div>
-      <div class="photo"><img src="images/synchronicity.webp" alt="avenrood shadows"></div>
-      <div class="photo"><img src="images/thinkahead.png" alt="avenrood shadows"></div>
-      <div class="photo"><img src="images/corner.jpg" alt="avenrood shadows"></div>
-      <div class="photo"><img src="images/blindfolded.jpg" alt="avenrood shadows"></div>
-      <div class="photo"><img src="images/melting.webp" alt="avenrood shadows"></div>
-      <div class="photo"><img src="images/paintjob.jpg" alt="paintjob"></div>
-      <div class="photo"><img src="images/ponderous.jpg" alt="avenrood shadows"></div>
-      <div class="photo"><img src="images/chameleon.jpg" alt="avenrood shadows"></div>
-      <div class="photo"><img src="images/misto.png" alt="avenrood"></div>
-      <div class="photo"><img src="images/drunk.jpg" alt="avenrood shadows"></div>
+      <div class="photo"><img src="images/radiantcut.jpg" alt="shadows"></div>
+      <div class="photo"><img src="images/synchronicity.webp" alt="shadows"></div>
+      <div class="photo"><img src="images/thinkahead.png" alt="shadows"></div>
+      <div class="photo"><img src="images/corner.jpg" alt="shadows"></div>
+      <div class="photo"><img src="images/blindfolded.jpg" alt="shadows"></div>
+      <div class="photo"><img src="images/melting.webp" alt="shadows"></div>
+      <div class="photo"><img src="images/paintjob.jpg" alt="shadows"></div>
+      <div class="photo"><img src="images/ponderous.jpg" alt="shadows"></div>
+      <div class="photo"><img src="images/chameleon.jpg" alt="shadows"></div>
+      <div class="photo"><img src="images/misto.png" alt="shadows"></div>
+      <div class="photo"><img src="images/drunk.jpg" alt="shadows"></div>
       <div class="photo"><img src="images/12.jpg" alt="shadows"></div>
-      <div class="photo"><img src="images/checkmate.jpg" alt="avenrood shadows"></div>
-      <div class="photo"><img src="images/moon.jpg" alt="avenrood shadows"></div>
-      <div class="photo"><img src="images/tube.jpg" alt="avenrood shadows"></div>
-      <div class="photo"><img src="images/show.jpeg" alt="show"></div>
-      <div class="photo"><img src="images/checked.jpg" alt="avenrood shadows"></div>
-      <div class="photo"><img src="images/desire01.jpg" alt="desire"></div>
-      <div class="photo"><img src="images/arrowoftime.jpeg" alt="vision"></div>
-      <div class="photo"><img src="images/differentworlds.jpg" alt="avenrood shadows"></div>
-      <div class="photo"><img src="images/mobius.jpg" alt="mobius"></div>
+      <div class="photo"><img src="images/checkmate.jpg" alt="shadows"></div>
+      <div class="photo"><img src="images/moon.jpg" alt="shadows"></div>
+      <div class="photo"><img src="images/tube.jpg" alt="shadows"></div>
+      <div class="photo"><img src="images/show.jpeg" alt="shadows"></div>
+      <div class="photo"><img src="images/checked.jpg" alt="shadows"></div>
+      <div class="photo"><img src="images/desire01.jpg" alt="shadows"></div>
+      <div class="photo"><img src="images/arrowoftime.jpeg" alt="shadows"></div>
+      <div class="photo"><img src="images/differentworlds.jpg" alt="shadows"></div>
+      <div class="photo"><img src="images/mobius.jpg" alt="shadows"></div>
       <div class="photo"><img src="images/noexit.jpg" alt="shadows"></div>
-      <div class="photo"><img src="images/smile.png" alt="show"></div>
-      <div class="photo"><img src="images/freeze.jpg" alt="shadow"></div>
-      <div class="photo"><img src="images/thewriting.jpg" alt="the writing"></div>
-      <div class="photo"><img src="images/written.jpg" alt="show"></div>
+      <div class="photo"><img src="images/smile.png" alt="shadows"></div>
+      <div class="photo"><img src="images/freeze.jpg" alt="shadows"></div>
+      <div class="photo"><img src="images/thewriting.jpg" alt="shadows"></div>
+      <div class="photo"><img src="images/written.jpg" alt="shadows"></div>
     </div>
   </div>
 
@@ -235,7 +219,6 @@
 
       const menuToggle = document.getElementById('menuToggle');
       const navMenu = document.getElementById('navMenu');
-
       menuToggle.addEventListener('click', function() {
         this.classList.toggle('open');
         navMenu.classList.toggle('open');
