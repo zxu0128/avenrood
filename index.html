@@ -4,127 +4,56 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>avenrood photography</title>
-  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;400&display=swap" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght=200;400&display=swap" rel="stylesheet">
 
   <style>
-    :root { --header-h: 60px; --side-pad: 0.8rem; --gallery-pad: 40px; }
+    :root { --header-h: 60px; --side-pad: 1rem; --gallery-pad: 40px; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Raleway', Arial, Helvetica, sans-serif;
       font-weight: 200;
       color: #111;
-      background: #f3f3f3;
+      background: #fafafa; /* ✅ Adjusted to a brighter, clean off-white */
       height: 100vh;
       overflow: hidden;
     }
 
-    /* --- HEADER --- */
+    /* Header */
     header {
       position: fixed; top: 0; left: 0; width: 100%; height: var(--header-h);
-      display: flex; justify-content: space-between; align-items: center;
+      display: grid; grid-template-columns: auto 1fr; align-items: center;
       padding: 0 var(--side-pad);
-      background: rgba(243,243,243,0.85);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid rgba(200,200,200,0.5);
+      background: rgba(250,250,250,0.9); /* ✅ Matches the new off-white background */
+      backdrop-filter: blur(5px);
+      border-bottom: 1px solid rgba(200,200,200,0.4);
       z-index: 1000;
     }
-
-    .logo {
-      font-weight: 400; font-size: 1.15rem; text-transform: lowercase;
-    }
+    .logo { font-weight: 400; font-size: 1.15rem; text-transform: lowercase; letter-spacing: 0; }
     .logo a { text-decoration: none; color: inherit; }
-
-    nav {
-      display: flex; gap: 1rem; align-items: center;
-      transition: all 0.3s ease;
-    }
-    nav a {
-      text-decoration: none; color: #111; font-weight: 200;
-      padding: 6px 8px; white-space: nowrap; transition: opacity 0.2s;
-    }
+    nav { justify-self: end; display: flex; gap: 1rem; align-items: center; overflow-x: auto; }
+    nav a { text-decoration: none; color: #111; font-weight: 200; padding: 6px 8px; white-space: nowrap; transition: opacity 0.2s; }
     nav a.active { opacity: 0.65; }
 
-    /* --- Hamburger --- */
-    .menu-toggle {
-      display: none;
-      position: relative;
-      width: 26px;
-      height: 22px;
-      cursor: pointer;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .menu-toggle span {
-      position: absolute;
-      width: 100%;
-      height: 2px;
-      background: #111;
-      transition: all 0.4s ease;
-    }
-
-    .menu-toggle span:nth-child(1) { top: 4px; }
-    .menu-toggle span:nth-child(2) { top: 10px; }
-    .menu-toggle span:nth-child(3) { top: 16px; }
-
-    .menu-toggle.open span:nth-child(1) {
-      transform: rotate(45deg);
-      top: 10px;
-    }
-    .menu-toggle.open span:nth-child(2) {
-      opacity: 0;
-    }
-    .menu-toggle.open span:nth-child(3) {
-      transform: rotate(-45deg);
-      top: 10px;
-    }
-
-    @media (max-width: 800px) {
-      .menu-toggle { display: flex; }
-
-      nav {
-        position: absolute;
-        top: var(--header-h);
-        right: 0;
-        width: 100%;
-        background: rgba(243,243,243,0.92);
-        backdrop-filter: blur(10px);
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 0.8rem;
-        padding: 0.8rem 1rem;
-        max-height: 0;
-        opacity: 0;
-        overflow: hidden;
-        pointer-events: none;
-        transform: translateY(-8px);
-        transition: opacity 0.4s ease, transform 0.4s ease, max-height 0.4s ease;
-      }
-
-      nav.open {
-        max-height: 300px;
-        opacity: 1;
-        pointer-events: auto;
-        transform: translateY(0);
-      }
-    }
-
-    /* --- Gallery --- */
+    /* Gallery container */
     .gallery-container {
       position: absolute; top: var(--header-h); left: 0; right: 0; bottom: 0;
       height: calc(100vh - var(--header-h));
-      overflow-x: auto; overflow-y: hidden;
+      overflow-x: auto;
+      overflow-y: hidden;
       -webkit-overflow-scrolling: touch;
-      scroll-behavior: auto;
-      background: #f3f3f3;
+      scroll-behavior: auto; /* controlled by JS */
+      background: #fafafa; /* ✅ Matches the body background */
     }
 
+    /* inner track (inline-flex) — Safari-friendly width calculation */
     .gallery-track {
       display: inline-flex;
       height: 100%;
       align-items: center;
-      padding: 0 20px;
+      padding: 0 28px; /* edge padding so first/last visible */
     }
+    .gallery-track::after { content: ''; flex: 0 0 28px; } /* extra spacer to guarantee reachability */
 
     .photo {
       flex: 0 0 auto;
@@ -132,69 +61,113 @@
       align-items: center;
       justify-content: center;
       height: 100%;
-      margin: 0 8px;
+      margin: 0 10px;
     }
-
     .photo img {
       max-height: calc(100% - var(--gallery-pad)*2);
       width: auto;
       object-fit: contain;
+      border-radius: 0;
       display: block;
     }
 
-    /* --- Mobile Adjustments --- */
+    p { font-size: 0.9em; }
+
+    /* Mobile adjustments */
     @media (max-width: 700px) {
+      header { padding: 0 0.6rem; }
+      .logo { font-size: 1rem; }
+      nav { gap: 0.6rem; }
+      nav a { font-size: 0.95rem; padding: 5px 6px; }
       .gallery-track { padding: 0 10px; }
+      .gallery-track::after { flex: 0 0 10px; }
+
       .photo {
-        margin: 30px 6px;  /* more vertical margin */
-        height: calc(85% - 60px); /* slightly higher images */
+        margin: 0 6px;   
+        height: 100%;
+        width: auto; 
       }
-      .photo img { max-height: 100%; width: auto; object-fit: contain; }
+
+      .photo img {
+        height: 55vh; 
+        max-height: 55vh;
+        width: auto; 
+        object-fit: contain;
+      }
     }
   </style>
 </head>
 <body>
   <header>
     <div class="logo"><a href="index.html">avenrood</a></div>
-    <div class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></div>
-    <nav id="navMenu">
+    <nav>
       <a href="info.html">info</a>
-      <a href="collection1.html">one</a>
-      <a href="collection2.html">two</a>
-      <a href="collection3.html">three</a>
-      <a href="memories.html">memories</a>
-      <a href="prints.html">prints</a>
+      <a href="travel.html">travel</a>
+      <a href="people.html">people</a>
+      <a href="shadows.html">shadows</a>
       <a href="https://instagram.com/avenrood" target="_blank" rel="noopener noreferrer">instagram</a>
     </nav>
   </header>
 
   <div class="gallery-container" id="gallery">
     <div class="gallery-track" id="galleryTrack">
-      <div class="photo"><img src="images/radiantcut.jpg" alt="radiant cut"></div>
-      <div class="photo"><img src="images/blindfolded.jpg" alt="blind folded"></div>
-      <div class="photo"><img src="images/ontheline.jpeg" alt="on the line"></div>
+      <div class="photo"><img src="images/primal_desire.jpeg" alt="radiant cut"></div>
       <div class="photo"><img src="images/liquidity.jpg" alt="liquidity"></div>
-      <div class="photo"><img src="images/flame.jpg" alt="flame"></div>
-      <div class="photo"><img src="images/mobius.jpg" alt="mobius"></div>
+      <div class="photo"><img src="images/wall.png" alt="wall"></div>
+      <div class="photo"><img src="images/gap.jpeg" alt="gap"></div>
       <div class="photo"><img src="images/dreambus.webp" alt="bus"></div>
       <div class="photo"><img src="images/eyeonyou.png" alt="eye on you"></div>
+      <div class="photo"><img src="images/show.jpeg" alt="show"></div>
+      <div class="photo"><img src="images/themarkonthewall.jpeg" alt="themarkonthewall"></div>
+      <div class="photo"><img src="images/roadtrip2.jpg" alt="trip"></div>
+      <div class="photo"><img src="images/travelseries.jpg" alt="trip"></div>
+      <div class="photo"><img src="images/grapedrying1.jpg" alt="grapedrying"></div>
+      <div class="photo"><img src="images/viewpoint.jpg" alt="viewpoint"></div>
+      <div class="photo"><img src="images/pair.jpg" alt="pair"></div>
+      <div class="photo"><img src="images/kinfolk.jpg" alt="kinfolk"></div>
+      <div class="photo"><img src="images/ice.jpg" alt="ice"></div>
+      <div class="photo"><img src="images/surface.jpg" alt="surface"></div>
+      <div class="photo"><img src="images/ontheroad.jpg" alt="ontheroad"></div>
+      <div class="photo"><img src="images/mirage.jpg" alt="mirage"></div>
+      <div class="photo"><img src="images/yakintibet.jpg" alt="yak"></div>
+      <div class="photo"><img src="images/glory.jpeg" alt="glory"></div>
+      <div class="photo"><img src="images/vision.jpeg" alt="vision"></div>
+      <div class="photo"><img src="images/snow.jpg" alt="snow"></div>
+      <div class="photo"><img src="images/blindfolded.jpg" alt="blind folded"></div>
+      <div class="photo"><img src="images/radiantcut.jpg" alt="radiant cut"></div>
+      <div class="photo"><img src="images/ontheline.jpeg" alt="ontheline"></div>
+      <div class="photo"><img src="images/flame.jpg" alt="flame"></div>
+      <div class="photo"><img src="images/night.jpg" alt="night"></div>
+      <div class="photo"><img src="images/afternoonbreak.jpg" alt="afternoonbreak"></div>
+      <div class="photo"><img src="images/mobius.jpg" alt="mobius"></div>
+      <div class="photo"><img src="images/window2.jpg" alt="window2"></div>
       <div class="photo"><img src="images/company.jpg" alt="company"></div>
-      <div class="photo"><img src="images/noexit.jpg" alt="no exit"></div>
+      <div class="photo"><img src="images/twin.jpg" alt="twin"></div>
+      <div class="photo"><img src="images/lightening.jpg" alt="lightening"></div>
+      <div class="photo"><img src="images/nightwalk.jpg" alt="nightwalk"></div>
       <div class="photo"><img src="images/landing.jpg" alt="landing"></div>
+      <div class="photo"><img src="images/freedom.jpg" alt="free"></div>
       <div class="photo"><img src="images/arrowoftime.jpeg" alt="arrow of time"></div>
+      <div class="photo"><img src="images/mungbeans.jpg" alt="beans"></div>
+      <div class="photo"><img src="images/symbols.jpg" alt="symbols"></div>
+      <div class="photo"><img src="images/backdrop.jpg" alt="backdrop"></div>
+      <div class="photo"><img src="images/river.jpg" alt="river"></div>
+      <div class="photo"><img src="images/window.jpeg" alt="window"></div>
+      <div class="photo"><img src="images/noexit.jpg" alt="no exit"></div>
     </div>
   </div>
 
   <script>
-    // Smooth wheel scroll for horizontal gallery
     (function() {
       const gallery = document.getElementById('gallery');
-      let pendingDelta = 0, ticking = false;
+      let pendingDelta = 0;
+      let ticking = false;
 
       gallery.addEventListener('wheel', function(e) {
         if (Math.abs(e.deltaY) < Math.abs(e.deltaX)) return;
         e.preventDefault();
         pendingDelta += e.deltaY;
+
         if (!ticking) {
           ticking = true;
           requestAnimationFrame(() => {
@@ -203,19 +176,12 @@
             if (next < 0) next = 0;
             if (next > maxScroll) next = maxScroll;
             gallery.scrollLeft = next;
-            pendingDelta = 0; ticking = false;
+            pendingDelta = 0;
+            ticking = false;
           });
         }
       }, { passive: false });
     })();
-
-    // Hamburger menu
-    const toggle = document.getElementById('menuToggle');
-    const nav = document.getElementById('navMenu');
-    toggle.addEventListener('click', () => {
-      toggle.classList.toggle('open');
-      nav.classList.toggle('open');
-    });
   </script>
 </body>
 </html>
