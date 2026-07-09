@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>travel – avenrood</title>
+  <title>travel | avenrood</title>
   <link rel="icon" type="image/png" href="favicon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght=200;400&display=swap" rel="stylesheet">
   <style>
@@ -17,7 +17,7 @@
       height: 100vh; 
       overflow: hidden; 
     }
-    p { font-size: 0.9em; }
+    p { font-size: 0.75em; line-height: 1.5; }
     
     /* Header */
     header {
@@ -66,34 +66,34 @@
     .gallery-track { 
       display: inline-flex; 
       height: 100%; 
-      align-items: center; 
-      padding: 0 28px; 
+      align-items: flex-start; 
+      padding: var(--gallery-pad) var(--side-pad) 0 var(--side-pad); 
       gap: 20px; 
     }
-    .gallery-track::after { content:''; flex:0 0 28px; }
+    .gallery-track::after { content:''; flex:0 0 var(--side-pad); height: 1px; }
     
     .photo { 
       flex: 0 0 auto; 
       display: flex; 
-      align-items: center; 
+      align-items: flex-start; 
       justify-content: center; 
-      height: 100%; 
+      height: calc(100% - var(--gallery-pad) * 2); 
       width: -webkit-max-content;
       width: max-content; 
     }
-    .photo img { max-height: calc(100% - var(--gallery-pad)*2); width:auto; object-fit:contain; display: block; }
+    .photo img { max-height: 100%; width:auto; object-fit:contain; display: block; }
     
     /* Text Intro Block */
     .text-box { 
       flex: 0 0 auto; 
       max-width: 320px; 
-      margin: 0 10px 0 0; 
+      margin: 0 38px 0 0; 
       padding: 0; 
       background: transparent; 
       border: none; 
       text-align: left; 
     }
-    .text-box h2 { font-weight: 400; font-size: 1.5rem; margin-bottom: 1rem; }
+    .text-box h2 { font-weight: 400; font-size: 1.15rem; margin-bottom: 1rem; }
 
     /* Mobile adjustments */
     @media (max-width: 700px) {
@@ -102,7 +102,6 @@
       
       .menu-toggle { display: flex; }
 
-      /* Left-aligned, tight overlay layout matching index */
       nav {
         position: fixed;
         top: 0;
@@ -122,43 +121,34 @@
         overflow-x: hidden;
       }
 
-      nav.open {
-        opacity: 1;
-        visibility: visible;
-      }
+      nav.open { opacity: 1; visibility: visible; }
+      nav a { font-size: 1.05rem; padding: 4px 0; }
 
-      nav a {
-        font-size: 1.05rem;
-        padding: 4px 0;
-      }
-
-      /* CSS Transforms for Toggle Cross Action */
       .menu-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
       .menu-toggle.open span:nth-child(2) { opacity: 0; }
       .menu-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
       
-      /* Visual centering layout configuration */
       .gallery-track { 
-        padding: 0 16px; 
+        padding: var(--gallery-pad) 1rem 0 1rem; 
         gap: 16px; 
-        transform: translateY(-8vh);
+        transform: none; 
       }
-      .gallery-track::after { flex: 0 0 16px; }
+      .gallery-track::after { flex: 0 0 1rem; }
 
       .photo { 
-        height: 100%; 
+        height: 55vh; 
         width: -webkit-max-content;
         width: max-content;
       }
       .photo img { 
-        height: 55vh; 
-        max-height: 55vh; 
+        max-height: 100%;
+        height: 100%;
         width: auto;
         object-fit: contain;
       }
       .text-box {
         max-width: 260px;
-        margin-right: 5px;
+        margin-right: 20px;
       }
     }
   </style>
@@ -203,7 +193,7 @@
       <div class="photo"><img src="images/sand.jpeg" alt="dune"></div>
       <div class="photo"><img src="images/lakeside.jpg" alt="lakeside"></div>  
       <div class="photo"><img src="images/palace.jpg" alt="palace"></div> 
-      <div class="photo"><img src="images/highway.jpg" alt="highway"></div>   
+      <div class="photo"><img src="images/highway.jpg" alt="highway"></div>    
       <div class="photo"><img src="images/danxialandscape_avenrood.jpg" alt="danxialandscape_avenrood"></div>
       <div class="photo"><img src="images/sweep.jpg" alt="avenrood"></div>
     </div>
