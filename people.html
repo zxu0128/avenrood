@@ -17,7 +17,7 @@
       height: 100vh; 
       overflow: hidden; 
     }
-    p { font-size: 0.9em; }
+    p { font-size: 0.75em; line-height: 1.5; } /* Made ~2pt smaller (from 0.9em) */
     
     /* Header */
     header {
@@ -92,8 +92,10 @@
       background: transparent; 
       border: none; 
       text-align: left; 
+      align-self: flex-start; /* Forces vertical alignment to the top */
+      margin-top: var(--gallery-pad); /* Matches the exact offset of image layout tracking bounds */
     }
-    .text-box h2 { font-weight: 400; font-size: 1.5rem; margin-bottom: 1rem; }
+    .text-box h2 { font-weight: 400; font-size: 1.3rem; margin-bottom: 1rem; } /* Made ~2pt smaller (from 1.5rem) */
 
     /* Mobile adjustments */
     @media (max-width: 700px) {
@@ -159,6 +161,8 @@
       .text-box {
         max-width: 260px;
         margin-right: 5px;
+        align-self: flex-start;
+        margin-top: 14.5vh; /* Syncs text tracking directly with top edge of shifted images */
       }
     }
   </style>
