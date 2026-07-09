@@ -17,7 +17,7 @@
       height: 100vh; 
       overflow: hidden; 
     }
-    p { font-size: 0.75em; line-height: 1.5; } /* Made ~2pt smaller (from 0.9em) */
+    p { font-size: 0.75em; line-height: 1.5; }
     
     /* Header */
     header {
@@ -66,36 +66,36 @@
     .gallery-track { 
       display: inline-flex; 
       height: 100%; 
-      align-items: center; 
-      padding: 0 28px; 
+      align-items: flex-start; 
+      /* Changed left tracking padding to match the global side padding system value */
+      padding: var(--gallery-pad) var(--side-pad) 0 var(--side-pad); 
       gap: 20px; 
     }
-    .gallery-track::after { content:''; flex:0 0 28px; }
+    .gallery-track::after { content:''; flex:0 0 var(--side-pad); height: 1px; }
     
     .photo { 
       flex: 0 0 auto; 
       display: flex; 
-      align-items: center; 
+      align-items: flex-start; 
       justify-content: center; 
-      height: 100%; 
+      height: calc(100% - var(--gallery-pad) * 2); 
       width: -webkit-max-content;
       width: max-content; 
     }
-    .photo img { max-height: calc(100% - var(--gallery-pad)*2); width:auto; object-fit:contain; display: block; }
+    .photo img { max-height: 100%; width:auto; object-fit:contain; display: block; }
     
     /* Text Intro Block */
     .text-box { 
       flex: 0 0 auto; 
       max-width: 320px; 
-      margin: 0 10px 0 0; 
+      /* Added a right margin gaps buffer to cleanly separate text bounds from first image layout track */
+      margin: 0 38px 0 0; 
       padding: 0; 
       background: transparent; 
       border: none; 
       text-align: left; 
-      align-self: flex-start; /* Forces vertical alignment to the top */
-      margin-top: var(--gallery-pad); /* Matches the exact offset of image layout tracking bounds */
     }
-    .text-box h2 { font-weight: 400; font-size: 1.3rem; margin-bottom: 1rem; } /* Made ~2pt smaller (from 1.5rem) */
+    .text-box h2 { font-weight: 400; font-size: 1.15rem; margin-bottom: 1rem; }
 
     /* Mobile adjustments */
     @media (max-width: 700px) {
@@ -139,30 +139,28 @@
       .menu-toggle.open span:nth-child(2) { opacity: 0; }
       .menu-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
       
-      /* Visual centering layout configuration */
       .gallery-track { 
-        padding: 0 16px; 
+        /* Enforces standard 1rem system padding consistency down into mobile screens */
+        padding: var(--gallery-pad) 1rem 0 1rem; 
         gap: 16px; 
-        transform: translateY(-8vh);
+        transform: none; 
       }
-      .gallery-track::after { flex: 0 0 16px; }
+      .gallery-track::after { flex: 0 0 1rem; }
 
       .photo { 
-        height: 100%; 
+        height: 55vh; 
         width: -webkit-max-content;
         width: max-content;
       }
       .photo img { 
-        height: 55vh; 
-        max-height: 55vh; 
+        max-height: 100%;
+        height: 100%;
         width: auto;
         object-fit: contain;
       }
       .text-box {
         max-width: 260px;
-        margin-right: 5px;
-        align-self: flex-start;
-        margin-top: 14.5vh; /* Syncs text tracking directly with top edge of shifted images */
+        margin-right: 20px;
       }
     }
   </style>
